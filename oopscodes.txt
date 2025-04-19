@@ -1,0 +1,288 @@
+1.Implement the Classes and Objects in Java:
+public class Car {
+    String color;
+    String model;
+    int year;
+    void displayDetails() {
+        System.out.println("Model: " + model + ", Color: " + color + ", Year: " + year);
+    }
+}
+2. Implement a program in java with Constructors and destructors. Also implement the concept of overloading:
+
+public class Person {
+    private String name;
+    private int age;
+
+    public Person() {
+        this.name = "Unknown";
+        this.age = 0;
+        System.out.println("Default constructor called");
+    }
+
+    public Person(String name) {
+        this.name = name;
+        this.age = 0;
+        System.out.println("Constructor with name called");
+    }
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+        System.out.println("Constructor with name and age called");
+    }
+    public void display() {
+        System.out.println("Name: " + name + ", Age: " + age);
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            System.out.println("finalize() called for Person: " + name);
+        } finally {
+            super.finalize();
+        }
+    }
+
+    public static void main(String[] args) {
+        Person person1 = new Person();
+        person1.display();
+
+        Person person2 = new Person("Alice");
+        person2.display();
+
+        Person person3 = new Person("Bob", 30);
+        person3.display();
+
+        person1 = null;
+        person2 = null;
+        person3 = null;
+
+        System.gc();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+3. Demonstrate use of Inheritance:
+
+class Vehicle {
+    protected String brand = "Ford"; 
+
+    public void honk() {
+        System.out.println("Tuut, tuut!");
+    }
+}
+
+class Car extends Vehicle {
+    private String modelName = "Mustang";  
+
+    public void display() {
+
+        System.out.println("Brand: " + brand);
+        System.out.println("Model: " + modelName);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Car myCar = new Car();
+
+        myCar.honk();
+
+        myCar.display();
+    }
+}
+4. Implement a concept of Interface in Java:
+
+interface Animal {
+    void makeSound(); 
+    void sleep();    
+}
+
+class Dog implements Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Dog says: Woof!");
+    }
+
+    @Override
+    public void sleep() {
+        System.out.println("Dog is sleeping.");
+    }
+}
+class Cat implements Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Cat says: Meow!");
+    }
+
+    @Override
+    public void sleep() {
+        System.out.println("Cat is sleeping.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal myDog = new Dog();
+        Animal myCat = new Cat();
+
+        myDog.makeSound();
+        myDog.sleep();
+
+        myCat.makeSound();
+        myCat.sleep();
+    }
+}
+
+5. Implement Packages and import that package in program:
+package mypackage;
+
+public class MyClass {
+    public void displayMessage() {
+        System.out.println("Hello from MyClass in mypackage!");
+    }
+}
+
+import mypackage.MyClass;
+
+public class Main {
+    public static void main(String[] args) {
+        MyClass obj = new MyClass();
+        obj.displayMessage();
+    }
+}
+
+6. Demonstrate use of Exception handling mechanism. 
+
+public class ExceptionHandlingExample {
+    public static void main(String[] args) {
+        try {
+            int[] numbers = {1, 2, 3};
+            System.out.println("Accessing element at index 5: " + numbers[5]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Exception caught: " + e);
+        } finally {
+            System.out.println("Finally block executed.");
+        }
+        System.out.println("Program continues after try-catch-finally.");
+    }
+}
+
+7. Apply concept of generics class and method:
+
+public class Box<T> {
+    private T value;
+
+    public void set(T value) {
+        this.value = value;
+    }
+
+    public T get() {
+        return value;
+    }
+}
+public class GenericMethodExample {
+    public static <E> void printArray(E[] array) {
+        for (E element : array) {
+            System.out.print(element + " ");
+        }
+        System.out.println();
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Box<Integer> integerBox = new Box<>();
+        integerBox.set(123);
+        System.out.println("Integer Value: " + integerBox.get());
+
+        Box<String> stringBox = new Box<>();
+        stringBox.set("Hello Generics");
+        System.out.println("String Value: " + stringBox.get());
+
+        Integer[] intArray = {1, 2, 3, 4, 5};
+        String[] strArray = {"A", "B", "C"};
+
+        System.out.print("Integer Array: ");
+        GenericMethodExample.printArray(intArray);
+
+        System.out.print("String Array: ");
+        GenericMethodExample.printArray(strArray);
+    }
+}
+
+8. Apply file handling concepts in Java:
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class FileHandler {
+    private File file;
+
+    public FileHandler(String fileName) {
+        this.file = new File(fileName);
+    }
+
+    public void createFile() {
+        try {
+            if (file.createNewFile()) {
+                System.out.println("File created: " + file.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred during file creation.");
+            e.printStackTrace();
+        }
+    }
+
+    public void writeToFile(String content) {
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write(content);
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred during writing to the file.");
+            e.printStackTrace();
+        }
+    }
+
+    public void readFromFile() {
+        try (FileReader reader = new FileReader(file)) {
+            int character;
+            System.out.print("File content: ");
+            while ((character = reader.read()) != -1) {
+                System.out.print((char) character);
+            }
+            System.out.println(); // For a new line after file content
+        } catch (IOException e) {
+            System.out.println("An error occurred during reading the file.");
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteFile() {
+        if (file.delete()) {
+            System.out.println("Deleted the file: " + file.getName());
+        } else {
+            System.out.println("Failed to delete the file.");
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        FileHandler fileHandler = new FileHandler("example.txt");
+
+        fileHandler.createFile();
+
+        fileHandler.writeToFile("Hello, this is a sample text written to the file.");
+
+        fileHandler.readFromFile();
+
+        fileHandler.deleteFile();
+    }
+}
